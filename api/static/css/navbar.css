@@ -1,0 +1,77 @@
+:root {
+    --bg-darker:rgb(19, 19, 19);
+    --bg-darker-soft:rgb(30, 30, 30);
+}
+
+
+#header {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-darker);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.20);
+    box-shadow: 0 0 0.8rem 0.4rem rgba(0, 0, 0, 0.20);
+    width: 100dvw;
+    padding: 1rem;
+    margin: 0 auto;
+    transition: background-color 0.3s ease;
+}
+
+
+.container-nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2rem;
+}
+
+#nav-link {
+    background-color: rgb(211, 158, 23);
+    text-decoration: none;
+    padding: 0.5rem;
+    width: max-content;
+    border:solid 1px rgb(11, 11, 11);
+    color: white;
+    font-weight: bold;
+    border-radius: 0.7rem;
+    cursor: pointer;
+}
+
+#nav-link:hover {
+    transform: scale(0.96);
+    background-color: rgb(230, 189, 87);
+    color: rgb(23, 23, 23);
+
+}
+
+.perfil {
+    font-size: 2rem;
+    background-color: transparent;
+    text-decoration: none;
+    padding: 0.5rem;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+
+}
+
+.perfil:hover {
+    transform: scale(0.96);
+    color:rgb(211, 158, 23) ;
+}
+
+#brand {
+    font-size:2.4rem;
+    color:white;
+    text-decoration: none;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    cursor: pointer;
+
+}

@@ -1,6 +1,12 @@
 from django.urls import path
-from . import views
+from .views import *
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', views.index, name='index')
+    path('', index, name='index'),
+    path('create-account/', TeacherCreateAccountView.as_view(),
+         name='create_account'),
+    path('login/', TeacherLoginView.as_view(), name='login'),
+    path('logout/', user_logout, name='logout'),
+
 ]

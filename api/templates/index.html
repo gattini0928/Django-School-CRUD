@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CRUD SERVER</title>
-  </head>
-  <body>
-    <h1>Django Server running!</h1>
-  </body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block css %} <link rel="stylesheet" href="{% static 'css/index.css' %}">{% endblock %}
+{% block content %} 
+  <h1>Django Server Running 🚀</h1>
+{% endblock %}
