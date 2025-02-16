@@ -17,7 +17,6 @@ SCHOOL_SUBJECTS_CHOICES = [
 
 ]
 
-
 class Teacher(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, blank=True, default=None)
@@ -25,6 +24,7 @@ class Teacher(models.Model):
     email = models.EmailField(unique=True)
     school_subject = models.CharField(
         max_length=50, choices=SCHOOL_SUBJECTS_CHOICES)
+    photo = models.ImageField(upload_to='teachers/', null=True, blank=True)
 
     def __str__(self):
         return f'Teacher {self.name} - Subject {self.school_subject}'
@@ -34,6 +34,9 @@ class Student(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, blank=True, default=None)
     name = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    photo = models.ImageField(upload_to='students/', null=True, blank=True)
+
     teachers = models.ForeignKey(
         Teacher, on_delete=models.SET_NULL, related_name='students', null=True, blank=True)
 
@@ -80,7 +83,7 @@ class SchoolSubject(models.Model):
         Student, on_delete=models.CASCADE, related_name='subjects')
     subject = models.CharField(max_length=50, choices=SCHOOL_SUBJECTS_CHOICES)
     grade = models.DecimalField(
-        max_digits=4, decimal_places=2, default=0.0)  # Nota inicial 0.0
+        max_digits=4, decimal_places=2, default=0.0)
 
     def __str__(self):
         return f"{self.subject} - {self.student.name}: {self.grade}"

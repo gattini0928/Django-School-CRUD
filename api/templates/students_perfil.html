@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Students
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/students.css' %}">
+{% endblock %}
+{% block content %}
+{% for student in students %}
+<div class="student-card">
+    <h3>{{ student.name }}</h3>
+    {% if student.photo %}
+        <img src="{{ student.photo.url }}" alt="{{ student.name }}" class="student-photo">
+    {% else %}
+        <p>No photo available</p>
+    {% endif %}
+</div>
+{% endfor %}
+
+{% endblock %}

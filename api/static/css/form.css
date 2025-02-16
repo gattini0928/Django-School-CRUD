@@ -38,30 +38,25 @@
     background-color: rgb(10, 47, 120);
 }
 
-.inputs-labels {
+.form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+.input-wrapper {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    justify-content: center;
     align-items: center;
-}
-
-.form-group {
-    margin-bottom: 15px;
+    justify-content: center; 
   }
   
-  .input-wrapper {
-    display: flex;
-    flex-direction: column; /* Alinha o label e input verticalmente */
+.form-label {
+  font-weight: bold;
+    margin-bottom: 0.5rem;
   }
   
-  .form-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .form-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.form-input {
+  padding: 0.8rem;
+  border: 1px solid #ccc;    
+  border-radius: 0.5rem;
   }

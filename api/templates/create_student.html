@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Create Student
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% block content %}
+        <form action="{% url 'create_student' %}" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
+                    {{ form.password }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <label for="{{ form.photo.id_for_label }}" class="form-label">{{ form.photo.label }}</label>
+                    {{ form.photo }}
+                </div>
+            </div>
+            <button type="submit" class="btn">Create Student</button>
+        </form>
+    </div>
+{% endblock %}
+

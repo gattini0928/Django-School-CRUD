@@ -2,15 +2,17 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Teacher
-from .forms import TeacherForm, TeacherLoginForm
-from django.views.generic import FormView
+from .models import Teacher, Student, Exam, SchoolSubject
+from .forms import TeacherForm, TeacherLoginForm, StudentLoginForm, StudentForm
+from django.views.generic import FormView, DetailView, ListView, CreateView, UpdateView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def index(request):
     return render(request, 'index.html')
+
 
 class TeacherLoginView(FormView):
     model = Teacher
@@ -43,14 +45,56 @@ class TeacherCreateAccountView(FormView):
             email=form.cleaned_data['email'],
             password=form.cleaned_data['password'],
         )
-        Teacher.objects.create(
-            user=user,
-            name=form.cleaned_data['name'],
-            email=form.cleaned_data['email'],
-            school_subject=form.cleaned_data['school_subject']
-        )
+        teacher = form.save(commit=False)
+        teacher.user = user
+        teacher.photo = self.request.FILES.get('photo')
+        teacher.save()
+
         messages.success(self.request, "Account created with success! Login")
         return super().form_valid(form)
+
+
+class TeacherPerfilView(LoginRequiredMixin, DetailView):
+    model = Teacher
+    template_name = 'teacher_perfil.html'
+    context_object_name = "teachers"
+
+    def get_object(self):
+        return Teacher.objects.get(user=self.request.user)
+
+
+class StudentCreateAccountView(LoginRequiredMixin, FormView):
+    form_class = StudentForm
+    template_name = 'create_student.html'
+    success_url = reverse_lazy('students_perfil')
+
+    def form_valid(self, form):
+        user = User.objects.create_user(
+            username=form.cleaned_data['email'],
+            email=form.cleaned_data['email'],
+            password=form.cleaned_data['password'],
+        )
+
+        student = form.save(commit=False) 
+        student.user = user
+        student.photo = self.request.FILES.get('photo')
+        student.save()
+        
+        messages.success(self.request, "Student created with success!")
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'student' in kwargs:
+            context['student'] = kwargs['student']
+            context['subjects'] = kwargs['subjects']
+        return context
+
+
+class StudentsPerfilView(LoginRequiredMixin, ListView):
+    model = Student
+    template_name = 'students_perfil.html'
+    context_object_name = "students"
 
 
 @login_required
