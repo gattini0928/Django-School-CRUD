@@ -17,6 +17,7 @@ SCHOOL_SUBJECTS_CHOICES = [
 
 ]
 
+
 class Teacher(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, blank=True, default=None)
@@ -24,10 +25,16 @@ class Teacher(models.Model):
     email = models.EmailField(unique=True)
     school_subject = models.CharField(
         max_length=50, choices=SCHOOL_SUBJECTS_CHOICES)
-    photo = models.ImageField(upload_to='teachers/', null=True, blank=True)
+    photo = models.ImageField(
+        upload_to='teachers/', null=True, blank=True, default='teachers/default.jpg')
 
     def __str__(self):
         return f'Teacher {self.name} - Subject {self.school_subject}'
+
+    def get_photo_url(self):
+        if self.photo:
+            return self.photo.url
+        return '/media/teachers/default.jpg'
 
 
 class Student(models.Model):
@@ -35,7 +42,8 @@ class Student(models.Model):
         User, on_delete=models.CASCADE, blank=True, default=None)
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    photo = models.ImageField(upload_to='students/', null=True, blank=True)
+    photo = models.ImageField(
+        upload_to='students/', null=True, blank=True, default='students/default.jpg')
 
     teachers = models.ForeignKey(
         Teacher, on_delete=models.SET_NULL, related_name='students', null=True, blank=True)
@@ -73,6 +81,11 @@ class Student(models.Model):
             return 'Student in Recuperation'
         else:
             return 'Student Reproved'
+
+    def get_photo_url(self):
+        if self.photo:
+            return self.photo.url
+        return '/media/teachers/default.jpg'
 
     def __str__(self):
         return self.name

@@ -7,12 +7,17 @@ urlpatterns = [
     path('create-account/', TeacherCreateAccountView.as_view(),
          name='create_account'),
     path('login/', TeacherLoginView.as_view(), name='login'),
-    path('logout/', user_logout, name='logout'),
-    path('create-student/', StudentCreateAccountView.as_view(),
-         name='create_student'),
     path('teacher-perfil/', TeacherPerfilView.as_view(),
          name='teacher_perfil'),
+    path('delete-teacher/<int:id>/',
+         delete_teacher, name='delete_teacher'),
+
+    path('create-student/', StudentCreateAccountView.as_view(),
+         name='create_student'),
     path('students/', StudentsPerfilView.as_view(),
          name='students_perfil'),
+    path('delete-student/<int:id>/',
+         delete_student, name='delete_student'),
+    path('logout/', user_logout, name='logout'),
 
 ]

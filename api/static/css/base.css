@@ -51,3 +51,9 @@ body {
   color: rgb(6, 92, 162);
   font-weight: 600;
 }
+
+.warning {
+  font-size: 2rem;
+  color: rgb(242, 4, 4);
+  font-weight: 600;
+}

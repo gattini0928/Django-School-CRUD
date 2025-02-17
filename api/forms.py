@@ -36,11 +36,6 @@ class StudentForm(forms.ModelForm):
         }
 
 
-class StudentLoginForm(forms.Form):
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput())
-
-
 class ExamForm(forms.ModelForm):
     class Meta:
         model = Exam

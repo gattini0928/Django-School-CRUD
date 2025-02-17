@@ -4,18 +4,28 @@
     Students
 {% endblock %}
 {% block css %}
+    <link rel="stylesheet" href="{% static 'css/cards.css' %}">
     <link rel="stylesheet" href="{% static 'css/students.css' %}">
 {% endblock %}
 {% block content %}
+<div class="container-cards">
 {% for student in students %}
-<div class="student-card">
+<div class="container-card">
+<div class="card">
     <h3>{{ student.name }}</h3>
     {% if student.photo %}
         <img src="{{ student.photo.url }}" alt="{{ student.name }}" class="student-photo">
     {% else %}
-        <p>No photo available</p>
+    <img src="{{ student.get_photo_url }}" alt="student perfil picture">
     {% endif %}
+    <p>{{student.email}}</p>
+    <div class="btn-container">
+        <a href="{% url 'delete_student' student.id %}" class="btn-delete" onclick="return confirm('You sure you want to delete this student?')">Delete Student</a>
+    </div>
+    
+</div>
 </div>
 {% endfor %}
+</div>
 
 {% endblock %}

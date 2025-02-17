@@ -6,7 +6,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'css/form.css' %}">{% endblock %}
 {% block content %}
   <div class="container-form">
-    <form id="form" action="{% url 'create_account' %}" method="POST" enctype="multipart/form-data"></form>>
+    <form id="form" action="{% url 'create_account' %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
         <div class="form-group">
           <div class="input-wrapper">
@@ -34,9 +34,10 @@
         </div>
         <div class="form-group">
           <div class="input-wrapper">
-            <label for="{{form.photo.id_for_label}}" class="form-label">{{form.photo.label}}</label>
-          {{form.photo}}
-          </div>
+            <label for="{{ form.photo.id_for_label }}" class="custom-file-label btn">Escolher Foto</label>
+            <input type="file" name="photo" id="{{ form.photo.id_for_label }}" class="custom-file-input">
+        </div>
+        
         </div>
       <button class="btn" type="submit">Submit</button>
     </form>

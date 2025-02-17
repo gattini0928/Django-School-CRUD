@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Teacher, Student, Exam, SchoolSubject
-from .forms import TeacherForm, TeacherLoginForm, StudentLoginForm, StudentForm
-from django.views.generic import FormView, DetailView, ListView, CreateView, UpdateView
+from .forms import TeacherForm, TeacherLoginForm, StudentForm
+from django.views.generic import FormView, DetailView, ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -57,10 +59,34 @@ class TeacherCreateAccountView(FormView):
 class TeacherPerfilView(LoginRequiredMixin, DetailView):
     model = Teacher
     template_name = 'teacher_perfil.html'
-    context_object_name = "teachers"
+    context_object_name = "teacher"
 
     def get_object(self):
-        return Teacher.objects.get(user=self.request.user)
+        user = self.request.user
+        teacher = Teacher.objects.filter(user=user).first()
+        if not teacher:
+            messages.warning(
+                self.request, 'You need to be a teacher to see this profile.')
+            return HttpResponseRedirect('/login/')
+        return teacher
+
+
+@login_required
+def delete_teacher(request, id):
+    user = request.user
+    teacher = get_object_or_404(Teacher, id=id, user=user)
+    teacher.delete()
+    logout(request)
+    messages.success(request, f"{user.username} deleted successfully")
+    return redirect('create_account')
+
+
+@login_required
+def delete_student(request, id):
+    student = get_object_or_404(Student, id=id)
+    student.delete()
+    messages.success(request, f"Student {student.name} deleted successfully")
+    return redirect('students_perfil')
 
 
 class StudentCreateAccountView(LoginRequiredMixin, FormView):
@@ -75,11 +101,11 @@ class StudentCreateAccountView(LoginRequiredMixin, FormView):
             password=form.cleaned_data['password'],
         )
 
-        student = form.save(commit=False) 
+        student = form.save(commit=False)
         student.user = user
         student.photo = self.request.FILES.get('photo')
         student.save()
-        
+
         messages.success(self.request, "Student created with success!")
         return super().form_valid(form)
 

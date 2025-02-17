@@ -32,8 +32,8 @@
             </div>
             <div class="form-group">
                 <div class="input-wrapper">
-                    <label for="{{ form.photo.id_for_label }}" class="form-label">{{ form.photo.label }}</label>
-                    {{ form.photo }}
+                    <label for="{{ form.photo.id_for_label }}" class="custom-file-label btn">Escolher Foto</label>
+                    <input type="file" name="photo" id="{{ form.photo.id_for_label }}" class="custom-file-input">
                 </div>
             </div>
             <button type="submit" class="btn">Create Student</button>

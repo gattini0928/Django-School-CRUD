@@ -21,22 +21,22 @@
     gap: 2rem;
     width: 80%;
 }
-
 .btn {
-    background-color: rgb(13, 69, 179);
-    text-decoration: none;
-    padding: 0.5rem;
-    width: max-content;
-    border:solid 1px rgba(255, 254, 254, 0.30);
-    color: white;
-    font-weight: bold;
-    border-radius: 0.7rem;
-    cursor: pointer;
+color: white;
+  padding: 1rem 2rem;
+  margin: 0.5rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  display: inline-block; 
 }
-
-.btn:hover {
-    background-color: rgb(10, 47, 120);
+.btn{
+  background-color: #2560de;
 }
+  .btn:hover {
+    background-color: #154fcb;
+  }
 
 .form-group {
     margin-bottom: 1.5rem;
@@ -60,3 +60,27 @@
   border: 1px solid #ccc;    
   border-radius: 0.5rem;
   }
+
+/* Esconde o campo de input de arquivo padrão */
+input[type="file"].custom-file-input {
+  display: none;
+}
+
+/* Customiza o botão de upload */
+.custom-file-input + .form-label {
+  display: inline-block;
+  background-color: #2560de;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.custom-file-input + .form-label:hover {
+  background-color: #154fcb;
+}
+
+.custom-file-input + .form-label:active {
+  background-color: #1a75f2;
+}
