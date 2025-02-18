@@ -1,3 +1,13 @@
+  .container-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: transparent;
+  }
+  
   .container-card {
     background-color: rgb(239, 213, 120);
     padding: 2rem;
@@ -47,7 +57,7 @@
     margin-top: 1rem; 
 }
 
-.btn-update, .btn-delete {
+.btn-update, .btn-delete, #btn-cancel {
   color: white;
   padding: 1rem 2rem;
   margin: 0.5rem;
@@ -58,6 +68,22 @@
   display: inline-block; 
 }
 
+#edit-card {
+  display: none;
+  gap: 2rem;
+  align-items: start;
+  justify-content: center;
+  background-color: rgb(239, 213, 120);
+  padding: 2rem;
+  margin-top: 3rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 -1rem 5rem 2rem rgba(0, 0, 0, 0.6);
+  height: auto;
+  width: 100%; 
+  max-width: 350px; 
+  min-height: 400px;
+}
+
 .btn-update{
   background-color: #2560de;
 }
@@ -65,10 +91,12 @@
     background-color: #154fcb;
   }
 
-  .btn-delete:hover {
+  .btn-delete, #btn-cancel{
+    background-color: #ab1f0cfe;
+  }
+  .btn-delete:hover, #btn-cancel:hover {
     background-color: #8d1a0afe;
   }
 
-  .btn-delete{
-    background-color: #ab1f0cfe;
-  }
+
+

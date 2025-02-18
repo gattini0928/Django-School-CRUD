@@ -9,6 +9,8 @@ urlpatterns = [
     path('login/', TeacherLoginView.as_view(), name='login'),
     path('teacher-perfil/', TeacherPerfilView.as_view(),
          name='teacher_perfil'),
+    path('teacher-edit-perfil/', TeacherUpdateView.as_view(),
+         name='teacher_edit_perfil'),
     path('delete-teacher/<int:id>/',
          delete_teacher, name='delete_teacher'),
 

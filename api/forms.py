@@ -4,7 +4,8 @@ from .models import Teacher, Exam, Student
 
 class TeacherForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'class': 'form-input', 'placeholder': 'Password'}))
+        attrs={'class': 'form-input', 'placeholder': 'Password'}),
+        required=False)
 
     class Meta:
         model = Teacher
@@ -14,6 +15,17 @@ class TeacherForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-input', 'placeholder': 'Email'}),
             'school_subject': forms.Select(attrs={'class': 'form-input'}),
         }
+
+    def save(self, commit=True):
+        teacher = super().save(commit=False)
+
+        if self.cleaned_data['password']:
+            teacher.user.set_password(self.cleaned_data['password'])
+            teacher.user.save()
+
+        if commit:
+            teacher.save()
+        return teacher
 
 
 class TeacherLoginForm(forms.Form):

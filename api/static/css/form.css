@@ -60,13 +60,11 @@ color: white;
   border: 1px solid #ccc;    
   border-radius: 0.5rem;
   }
-
-/* Esconde o campo de input de arquivo padrão */
+  
 input[type="file"].custom-file-input {
   display: none;
 }
 
-/* Customiza o botão de upload */
 .custom-file-input + .form-label {
   display: inline-block;
   background-color: #2560de;

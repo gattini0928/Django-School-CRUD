@@ -55,6 +55,11 @@ class TeacherCreateAccountView(FormView):
         messages.success(self.request, "Account created with success! Login")
         return super().form_valid(form)
 
+    def form_invalid(self, form):
+        user_email = form.cleaned_data['email']
+        messages.error(self.request, f'User {user_email} already Exists')
+        return redirect('create_account')
+
 
 class TeacherPerfilView(LoginRequiredMixin, DetailView):
     model = Teacher
@@ -71,11 +76,41 @@ class TeacherPerfilView(LoginRequiredMixin, DetailView):
         return teacher
 
 
+class TeacherUpdateView(LoginRequiredMixin, UpdateView):
+    model = Teacher
+    form_class = TeacherForm
+    template_name = 'teacher_perfil.html'
+    success_url = reverse_lazy('teacher_perfil')
+
+    def get_object(self, queryset=None):
+        teacher = get_object_or_404(Teacher, user=self.request.user)
+        return teacher
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['teacher'] = self.get_object()
+        return context
+
+    def form_valid(self, form):
+        teacher = form.save(commit=False)
+        user = teacher.user
+        user.username = form.cleaned_data['email']
+        user.email = form.cleaned_data['email']
+        user.save()
+        teacher.photo = self.request.FILES.get('photo')
+        teacher.save()
+
+        messages.success(
+            self.request, f'Perfil edited successfully, changes saved')
+        return redirect('teacher_perfil')
+
+
 @login_required
 def delete_teacher(request, id):
     user = request.user
     teacher = get_object_or_404(Teacher, id=id, user=user)
     teacher.delete()
+    user.delete()
     logout(request)
     messages.success(request, f"{user.username} deleted successfully")
     return redirect('create_account')
