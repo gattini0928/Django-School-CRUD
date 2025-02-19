@@ -27,9 +27,15 @@ class TeacherLoginView(FormView):
         password = form.cleaned_data['password']
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
-            login(self.request, user)
-            messages.success(self.request, f'Welcome {user.username}')
-            return super().form_valid(form)
+            is_teacher = Teacher.objects.filter(user=user).exists()
+            if is_teacher:
+                login(self.request, user)
+                messages.success(self.request, f'Welcome {user.username}')
+                return super().form_valid(form)
+            else:
+                messages.error(
+                    self.request, "You need to be a teacher to log in.")
+                return redirect('create_account')
         else:
             messages.error(
                 self.request, 'Invalid Credentials. Try again.')
@@ -42,10 +48,14 @@ class TeacherCreateAccountView(FormView):
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
-        print("Form is valid, creating user...")
+        email = form.cleaned_data['email']
+        if User.objects.filter(email=email).first():
+            messages.error(self.request, f'Email {email} already exists.')
+            return redirect('create_account')
+
         user = User.objects.create_user(
-            username=form.cleaned_data['email'],
-            email=form.cleaned_data['email'],
+            username=email,
+            email=email,
             password=form.cleaned_data['password'],
         )
         teacher = form.save(commit=False)
@@ -53,7 +63,8 @@ class TeacherCreateAccountView(FormView):
         teacher.photo = self.request.FILES.get('photo')
         teacher.save()
 
-        messages.success(self.request, "Account created successfully! Please log in.")
+        messages.success(
+            self.request, "Account created successfully! Please log in.")
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -73,7 +84,7 @@ class TeacherPerfilView(LoginRequiredMixin, DetailView):
         if not teacher:
             messages.warning(
                 self.request, 'You need to be a teacher to see this profile.')
-            return HttpResponseRedirect('/login/')
+            return redirect('/login/')
         return teacher
 
 
@@ -84,30 +95,29 @@ class TeacherUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('teacher_perfil')
 
     def get_object(self, queryset=None):
-        teacher = get_object_or_404(Teacher, user=self.request.user)
-        return teacher
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['teacher'] = self.get_object()
-        return context
+        return get_object_or_404(Teacher, user=self.request.user)
 
     def form_valid(self, form):
         teacher = form.save(commit=False)
         user = teacher.user
         user.username = form.cleaned_data['email']
         user.email = form.cleaned_data['email']
+
         if form.cleaned_data['password']:
             user.set_password(form.cleaned_data['password'])
-        user.save()
         if self.request.FILES.get('photo'):
             teacher.photo = self.request.FILES['photo']
 
+        user.save()
         teacher.save()
 
         messages.success(
             self.request, f'Perfil edited successfully, changes saved')
         return redirect('teacher_perfil')
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Error editing your profile, try again')
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 @login_required

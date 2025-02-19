@@ -5,12 +5,12 @@
 }
 
 html, body {
-  overflow-x: hidden;
   width: 100%;
 }
 
 html {
   font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 
 body {

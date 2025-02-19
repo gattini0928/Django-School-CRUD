@@ -19,28 +19,6 @@ class TeacherForm(forms.ModelForm):
             'school_subject': forms.Select(attrs={'class': 'form-input'}),
         }
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email).exclude(pk=self.instance.user.pk).exists():
-            raise ValidationError('This email is already in use.')
-        return email
-
-    def save(self, commit=True):
-        teacher = super().save(commit=False)
-
-        if not teacher.user:
-            teacher.user = User.objects.create(
-                username=self.cleaned_data['email'], email=self.cleaned_data['email'])
-
-        if self.cleaned_data['password']:
-            teacher.user.set_password(self.cleaned_data['password'])
-
-        if commit:
-            teacher.user.save()
-            teacher.save()
-
-        return teacher
-
 
 class TeacherLoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(

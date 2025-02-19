@@ -4,7 +4,8 @@
     Edit Perfil
 {% endblock %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/edit_perfil.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/buttons.css' %}">
 {% endblock %}
 {% block content %}
 <h1>Edit perfil | {{teacher.name}}</h1>
@@ -42,8 +43,10 @@
         </div>
         
         </div>
-      <button class="btn-update" type="submit">Save</button>
-      <button class="btn-cancel" type="button">Cancel</button>
+      <div class="buttons-wrapper">
+        <button class="btn-update" type="submit">Save</button>
+        <a href="{% url 'teacher_perfil' %}" class="btn-cancel" type="button">Cancel</a>
+      </div>
     </form>
   </div>
 {% endblock %}

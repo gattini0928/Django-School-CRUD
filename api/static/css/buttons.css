@@ -1,0 +1,34 @@
+.buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 0.5rem;
+    margin: 0.5rem auto;
+}
+
+.btn-cancel, .btn-update {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.50);
+    border-radius: 0.5rem;
+}
+
+.btn-update{
+    background-color: rgb(83, 196, 83);
+    border: solid 0.5px black;
+  }
+
+.btn-update:hover {
+      background-color: rgb(47, 158, 47);
+}
+  
+.btn-cancel{
+    background-color: #ab1f0cfe;
+    text-decoration: none;
+    padding: 0.5rem;
+}
+.btn-cancel:hover{
+    background-color: #8d1a0afe;
+}

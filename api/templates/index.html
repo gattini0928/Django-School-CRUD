@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block css %} <link rel="stylesheet" href="{% static 'css/index.css' %}">{% endblock %}
+
+{% block css %} 
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
 {% block content %} 
   <h1>Django Server Running 🚀</h1>
+  
+  <div id="react-root"></div>
+  
+  <script src="{% static 'js/bundle.js' %}"></script>
 {% endblock %}
