@@ -47,13 +47,7 @@ class Student(models.Model):
 
     teachers = models.ForeignKey(
         Teacher, on_delete=models.SET_NULL, related_name='students', null=True, blank=True)
-
-    def save(self, *args, **kwargs):
-        """Automatically creates all subjects for the student."""
-        super().save(*args, **kwargs)  # Salva o aluno primeiro
-        for subject in SCHOOL_SUBJECTS_CHOICES:
-            SchoolSubject.objects.get_or_create(
-                student=self, subject=subject[0])
+    student_status = models.BooleanField(default=False)
 
     def total_score(self):
         """Calculates the sum of all grades and ensures that it does not exceed 100."""
@@ -75,12 +69,11 @@ class Student(models.Model):
     def status(self):
         """Returns the student's status based on the accumulated grade."""
         final_grade = self.total_score()
-        if final_grade >= 65:
-            return 'Student Approved'
-        elif final_grade >= 55:
-            return 'Student in Recuperation'
+        if final_grade >= 70:
+            self.student_status = True
+            return self.student_status
         else:
-            return 'Student Reproved'
+            return self.student_status
 
     def get_photo_url(self):
         if self.photo:
@@ -89,17 +82,6 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class SchoolSubject(models.Model):
-    student = models.ForeignKey(
-        Student, on_delete=models.CASCADE, related_name='subjects')
-    subject = models.CharField(max_length=50, choices=SCHOOL_SUBJECTS_CHOICES)
-    grade = models.DecimalField(
-        max_digits=4, decimal_places=2, default=0.0)
-
-    def __str__(self):
-        return f"{self.subject} - {self.student.name}: {self.grade}"
 
 
 class Exam(models.Model):

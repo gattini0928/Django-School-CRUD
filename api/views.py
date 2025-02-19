@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from .models import Teacher, Student, Exam, SchoolSubject
+from .models import Teacher, Student, Exam
 from .forms import TeacherForm, TeacherLoginForm, StudentForm
 from django.views.generic import FormView, DetailView, ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
@@ -182,6 +182,7 @@ class StudentGradeView(LoginRequiredMixin, DetailView):
         student_id = self.kwargs['id']
         student = get_object_or_404(Student, id=student_id)
         return student
+
 
 
 @login_required

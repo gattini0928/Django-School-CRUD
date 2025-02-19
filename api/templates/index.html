@@ -1,14 +1,57 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block css %} 
-  <link rel="stylesheet" href="{% static 'css/index.css' %}">
-{% endblock %}
-
-{% block content %} 
-  <h1>Django Server Running 🚀</h1>
-  
-  <div id="react-root"></div>
-  
-  <script src="{% static 'js/bundle.js' %}"></script>
+{% extends 'base.html' %} 
+{% load static %} 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}" />
+{% endblock %} {% block content %}
+<div class="container">
+  <h1>Create Student's Exam</h1>
+  <button type="button" id="display-manager">Manager</button>
+</div>
+<form id="form-table" method="post">
+  <div class="row">
+    <div class="cell">Profile</div>
+    <div class="cell">Student</div>
+    <div class="cell">Subject</div>
+    <div class="cell">Date</div>
+    <div class="cell">Grade</div>
+  </div>
+  <div class="row">
+    <div class="cell">
+      <div class="img-wrapper">
+        <img src="snoop-dg.jpg" alt="snoop" />
+      </div>
+    </div>
+    <div class="cell">
+      <select name="aluno-snoop" id="aluno">
+        <option value="SnoopDog">SnoopDog</option>
+        <option value="SnoopDog">SnoopDog</option>
+        <option value="SnoopDog">SnoopDog</option>
+      </select>
+    </div>
+    <div class="cell">Mathematics</div>
+    <div class="cell">2025-02-19</div>
+    <div class="cell">
+      <input
+        type="number"
+        step="0.1"
+        id="student-grade"
+        max="10"
+        min="0"
+        required
+      />
+    </div>
+  </div>
+  <div class="button-wrapper">
+    <button class="save-btn" type="submit">Save</button>
+  </div>
+</form>
+<script>
+  const table = document.getElementById("form-table");
+  const btnManager = document.getElementById("display-manager");
+  btnManager.addEventListener("click", () => {
+    setTimeout(() => {
+      table.style.display = "flex";
+    }, 500);
+  });
+</script>
 {% endblock %}
