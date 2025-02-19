@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Student {{student.name}}
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/grades.css' %}">
+{% endblock %}
+{% block content %}
+    <section class="container-page">
+        <h1>Subjects Grades | {{student.name}}</h1>
+
+        <div class="profile-card">
+            <div class="image-card">
+                {% if student.photo %}
+                    <img src="{{ student.photo.url }}" alt="{{ student.name }}" class="student-photo">
+                {% else %}
+                    <img src="{{ student.get_photo_url }}" alt="student perfil picture">
+                {% endif %}
+            </div>
+            <div class="student-details">
+                <p><strong>Name:</strong> {{ student.name }}</p>
+                <p><strong>Email:</strong> {{ student.email }}</p>
+            </div>
+        </div>
+
+        <div class="grades-table">
+            <div class="table-header">
+                <div class="table-cell">Subject</div>
+                <div class="table-cell">Average</div>
+                <div class="table-cell">Total Score</div>
+                <div class="table-cell">Status</div>
+            </div>
+            <div class="table-row">
+                <div class="table-cell">Chemistry</div>
+                <div class="table-cell">9.2</div>
+                <div class="table-cell">92.6</div>
+                <div class="table-cell status approved">Approved</div>
+            </div>
+            <div class="table-row">
+                <div class="table-cell">English</div>
+                <div class="table-cell">4.6</div>
+                <div class="table-cell">69.9</div>
+                <div class="table-cell status reproved">Reproved</div>
+            </div>
+            <div class="table-row">
+                <div class="table-cell">Mathematics</div>
+                <div class="table-cell">8.8</div>
+                <div class="table-cell">80.0</div>
+                <div class="table-cell status approved">Approved</div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

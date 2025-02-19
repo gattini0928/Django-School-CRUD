@@ -18,6 +18,8 @@ urlpatterns = [
          name='create_student'),
     path('students/', StudentsPerfilView.as_view(),
          name='students_perfil'),
+    path('student-grades/<int:id>', StudentGradeView.as_view(),
+         name='student_grades'),
     path('delete-student/<int:id>/',
          delete_student, name='delete_student'),
     path('logout/', user_logout, name='logout'),

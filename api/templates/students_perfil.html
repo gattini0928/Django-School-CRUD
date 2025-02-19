@@ -20,7 +20,7 @@
     {% endif %}
     <p>{{student.email}}</p>
     <div class="btn-container">
-        <a class="btn-update">Subjects grades</a>
+        <a href="{% url 'student_grades' student.id %}" class="btn-update">Subjects grades</a>
         <a href="{% url 'delete_student' student.id %}" class="btn-delete" onclick="return confirm('You sure you want to delete this student?')">Delete Student</a>
     </div>
     

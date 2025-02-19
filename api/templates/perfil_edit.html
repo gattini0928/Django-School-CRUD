@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-  Create Account
+    Edit Perfil
 {% endblock %}
-{% block css %}<link rel="stylesheet" href="{% static 'css/form.css' %}">{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/edit_perfil.css' %}">
+{% endblock %}
 {% block content %}
-  <div class="container-form">
-    <form id="form" action="{% url 'create_account' %}" method="POST" enctype="multipart/form-data">
+<h1>Edit perfil | {{teacher.name}}</h1>
+<div class="container-form">
+    <form id="form" action="{% url 'teacher_edit_perfil' %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
         <div class="form-group">
           <div class="input-wrapper">
@@ -39,8 +42,8 @@
         </div>
         
         </div>
-      <button class="btn" type="submit">Submit</button>
+      <button class="btn-update" type="submit">Save</button>
+      <button class="btn-cancel" type="button">Cancel</button>
     </form>
   </div>
 {% endblock %}
-

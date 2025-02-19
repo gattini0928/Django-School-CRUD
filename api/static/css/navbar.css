@@ -18,7 +18,7 @@
     padding: 1rem;
     margin: 0 auto;
     transition: background-color 0.3s ease;
-    overflow-x: hidden; /* Evita estouro de largura */
+    overflow-x: hidden; 
 }
 
 
@@ -31,14 +31,14 @@
 }
 
 #nav-link {
-    background-color: rgb(211, 158, 23);
+    background-color: transparent;
     text-decoration: none;
     padding: 0.5rem;
     width: max-content;
     border:solid 1px rgb(11, 11, 11);
     color: white;
     font-weight: bold;
-    border-radius: 0.7rem;
+    border-radius: 0.5rem;
     cursor: pointer;
 }
 

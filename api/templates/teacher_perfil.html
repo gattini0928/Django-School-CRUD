@@ -5,13 +5,12 @@
 {% endblock %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/cards.css' %}">
-    <link rel="stylesheet" href="{% static 'css/form.css' %}">
 {% endblock %}
 {% block content %}
+      <h3>Teacher Perfil</h3>
     <main class="container-page">
         <div class="container-card">
             <div class="card">
-                <h3>Teacher Perfil</h3>
                 <p>Name: {{teacher.name}}</p>
                 <div class="container-image">
                     {% if teacher.photo %}
@@ -23,69 +22,9 @@
                 <p>Email: {{teacher.email}}</p>
                 <p>School Subject: {{teacher.school_subject}}</p>
                 <div class="btn-container">
-                    <a class="btn-update" id="btn-update">Edit Perfil</a>
+                    <a href="{% url 'teacher_edit_perfil' %}" class="btn-update" id="btn-update">Edit Perfil</a>
                     <a href="{% url 'delete_teacher' teacher.id %}" class="btn-delete" onclick="return confirm('You sure you want to delete your perfil?')">Delete Perfil</a>
                 </div>
             </div>
         </div>
-        <div class="edit-card" id="edit-form" >
-            <form  action="{% url 'teacher_edit_perfil' %}" method="post", enctype="multipart/form-data" id="form">
-                {% csrf_token %}
-                <div class="form-group">
-                    <div class="input-wrapper">
-                      <label for="{{form.name.id_for_label}}" class="form-label">{{form.name.label}}</label>
-                    {{form.name}}
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-wrapper">
-                      <label for="{{form.email.id_for_label}}" class="form-label">{{form.email.label}}</label>
-                    {{form.email}}
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-wrapper">
-                      <label for="{{form.password.id_for_label}}" class="form-label">{{form.password.label}}</label>
-                    {{form.password}}
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-wrapper">
-                      <label for="{{form.school_subject.id_for_label}}" class="form-label">{{form.school_subject.label}}</label>
-                    {{form.school_subject}}
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-wrapper">
-                      <label for="{{ form.photo.id_for_label }}" class="custom-file-label btn">Choose Photo</label>
-                      <input type="file" name="photo" id="{{ form.photo.id_for_label }}" class="custom-file-input">
-                  </div>
-                </div>
-                <button class="btn" type="submit" id="edit-btn" onclick="return confirm('Confirm Changes?')">Save Changes</button>
-                <button id="btn-cancel" type="button">Cancel</button>
-            </form>
-        </div>
-    </main>
-    <script>
-            const btnUpdate = document.getElementById("btn-update");
-            const btnCancel = document.getElementById("btn-cancel");
-            const formCard = document.getElementById("edit-form");
-
-            btnUpdate.addEventListener("click", function() {
-                setTimeout(() => {
-                    formCard.style.display = "flex";
-                }, 500);
-                
-            btnCancel.addEventListener("click", function() {
-                formCard.style.display = "none"; // Esconde o formulário
-            });
-
-            formCard.querySelector("form").addEventListener("submit", function () {
-                setTimeout(function() {
-                    formCard.style.display = "none";
-                }, 1000);
-            });
-        });
-    </script>
-
 {% endblock %}

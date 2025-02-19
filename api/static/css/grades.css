@@ -1,0 +1,93 @@
+/* Estilos principais da página */
+.container-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 2rem;
+}
+
+.profile-card {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.image-card {
+    flex-shrink: 0;
+    width: 15rem;
+    height: 15rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.student-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.student-details p {
+    font-size: 1.1em;
+    margin: 0.5rem 0;
+}
+
+/* Estilos da tabela */
+.grades-table {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    font-weight: bold;
+    background-color: #191919;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    background-color: #202020;
+}
+
+.table-cell {
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status {
+    text-align: center;
+    font-weight: bold;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+}
+
+.approved {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.reproved {
+    background-color: #F44336;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .table-header {
+        grid-template-columns: 1fr 1fr;
+    }
+    .table-row {
+        grid-template-columns: 1fr 1fr;
+    }
+}

@@ -42,6 +42,7 @@ class TeacherCreateAccountView(FormView):
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):
+        print("Form is valid, creating user...")
         user = User.objects.create_user(
             username=form.cleaned_data['email'],
             email=form.cleaned_data['email'],
@@ -52,13 +53,13 @@ class TeacherCreateAccountView(FormView):
         teacher.photo = self.request.FILES.get('photo')
         teacher.save()
 
-        messages.success(self.request, "Account created with success! Login")
+        messages.success(self.request, "Account created successfully! Please log in.")
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        user_email = form.cleaned_data['email']
-        messages.error(self.request, f'User {user_email} already Exists')
-        return redirect('create_account')
+        messages.error(
+            self.request, 'Something went wrong. Check the form and try again.')
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class TeacherPerfilView(LoginRequiredMixin, DetailView):
@@ -79,7 +80,7 @@ class TeacherPerfilView(LoginRequiredMixin, DetailView):
 class TeacherUpdateView(LoginRequiredMixin, UpdateView):
     model = Teacher
     form_class = TeacherForm
-    template_name = 'teacher_perfil.html'
+    template_name = 'perfil_edit.html'
     success_url = reverse_lazy('teacher_perfil')
 
     def get_object(self, queryset=None):
@@ -96,8 +97,12 @@ class TeacherUpdateView(LoginRequiredMixin, UpdateView):
         user = teacher.user
         user.username = form.cleaned_data['email']
         user.email = form.cleaned_data['email']
+        if form.cleaned_data['password']:
+            user.set_password(form.cleaned_data['password'])
         user.save()
-        teacher.photo = self.request.FILES.get('photo')
+        if self.request.FILES.get('photo'):
+            teacher.photo = self.request.FILES['photo']
+
         teacher.save()
 
         messages.success(
@@ -156,6 +161,17 @@ class StudentsPerfilView(LoginRequiredMixin, ListView):
     model = Student
     template_name = 'students_perfil.html'
     context_object_name = "students"
+
+
+class StudentGradeView(LoginRequiredMixin, DetailView):
+    model = Student
+    template_name = 'student_grades.html'
+    context_object_name = 'student'
+
+    def get_object(self):
+        student_id = self.kwargs['id']
+        student = get_object_or_404(Student, id=student_id)
+        return student
 
 
 @login_required
