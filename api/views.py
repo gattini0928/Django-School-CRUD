@@ -120,6 +120,8 @@ class TeacherUpdateView(LoginRequiredMixin, UpdateView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
+
+
 @login_required
 def delete_teacher(request, id):
     user = request.user

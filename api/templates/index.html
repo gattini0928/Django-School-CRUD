@@ -8,6 +8,7 @@
   <button type="button" id="display-manager">Manager</button>
 </div>
 <form id="form-table" method="post">
+  {% csrf_token %}
   <div class="row">
     <div class="cell">Profile</div>
     <div class="cell">Student</div>
@@ -22,7 +23,8 @@
       </div>
     </div>
     <div class="cell">
-      <select name="aluno-snoop" id="aluno">
+      <select id="student">
+        <option value="" disabled selected>Choose a Student</option>
         <option value="SnoopDog">SnoopDog</option>
         <option value="SnoopDog">SnoopDog</option>
         <option value="SnoopDog">SnoopDog</option>
@@ -37,21 +39,25 @@
         id="student-grade"
         max="10"
         min="0"
-        required
       />
     </div>
   </div>
   <div class="button-wrapper">
     <button class="save-btn" type="submit">Save</button>
+    <button class="cancel-btn" id="display-manager" type="button">Cancel</button>
   </div>
 </form>
 <script>
-  const table = document.getElementById("form-table");
-  const btnManager = document.getElementById("display-manager");
-  btnManager.addEventListener("click", () => {
-    setTimeout(() => {
-      table.style.display = "flex";
-    }, 500);
-  });
+    let table = document.getElementById("form-table");
+    const btnManager = document.getElementById("display-manager");
+    let inputValue = document.getElementById('student-grade').value
+    if (inputValue === 0){
+      inputValue = 0
+    }
+    btnManager.addEventListener("click", () => {
+      setTimeout(() => {
+        table.style.display = table.style.display === "none" ? "flex" : "none";
+      }, 500);
+    });
 </script>
 {% endblock %}

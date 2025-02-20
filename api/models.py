@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Sum
+from django.core.exceptions import ValidationError
 
 SCHOOL_SUBJECTS_CHOICES = [
     ("Mathematics", "Mathematics"),
@@ -45,40 +47,40 @@ class Student(models.Model):
     photo = models.ImageField(
         upload_to='students/', null=True, blank=True, default='students/default.jpg')
 
-    teachers = models.ForeignKey(
-        Teacher, on_delete=models.SET_NULL, related_name='students', null=True, blank=True)
+    teachers = models.ManyToManyField(
+        Teacher, related_name='students')
     student_status = models.BooleanField(default=False)
 
     def total_score(self):
         """Calculates the sum of all grades and ensures that it does not exceed 100."""
-        total = sum(subject.grade for subject in self.subjects.all())
+        total = sum(exam.grade for exam in self.exam.all())
         return min(total, 100)
 
     def total_score_by_subject(self):
         """Returns a dictionary with the sum of grades per subject."""
-        subject_scores = {}
-        for subject in SCHOOL_SUBJECTS_CHOICES:
-            subject_name = subject[0]
-            exams = Exam.objects.filter(student=self, subject=subject_name)
-            total = sum(exam.grade for exam in exams)
-            subject_scores[subject_name] = min(
-                total, 100)
+        subject_scores = {subject[0]: 0 for subject in SCHOOL_SUBJECTS_CHOICES}
+
+        exams = self.exams.values('subject').annotate(total=Sum('grade'))
+
+        for exam in exams:
+            subject_scores[exam['subject']] = min(exam['total'], 100)
+
         return subject_scores
 
     @property
     def status(self):
         """Returns the student's status based on the accumulated grade."""
-        final_grade = self.total_score()
-        if final_grade >= 70:
-            self.student_status = True
-            return self.student_status
-        else:
-            return self.student_status
+        return self.total_score() >= 70
+
+    def update_status(self):
+        """Updates the student's status in the database."""
+        self.student_status = self.total_score() >= 70
+        self.save()
 
     def get_photo_url(self):
         if self.photo:
             return self.photo.url
-        return '/media/teachers/default.jpg'
+        return '/media/students/default.jpg'
 
     def __str__(self):
         return self.name
@@ -94,3 +96,10 @@ class Exam(models.Model):
 
     def __str__(self):
         return f"{self.subject} - {self.student.name}: {self.grade}"
+
+    def save(self, *args, **kwargs):
+        """Ensure that teacher's subject matches the exam subject before saving."""
+        if self.teacher.school_subject != self.subject:
+            raise ValidationError(
+                f'Teacher {self.teacher.name} is not allowed to grade {self.subject}.')
+        super().save(*args, **kwargs)
