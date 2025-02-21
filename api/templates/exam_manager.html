@@ -1,0 +1,64 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/exam_manager.css' %}" />
+{% endblock %} {% block content %}
+<div class="container">
+  <h1>Create Student's Exam</h1>
+  <button type="button" id="display-manager">Manager</button>
+</div>
+<form action="{% url 'exam_manager' student.id teacher.id %}" id="form-table" method="post">
+  {% csrf_token %}
+  <div class="row">
+    <div class="cell">Photo</div>
+    <div class="cell">Student</div>
+    <div class="cell">Subject</div>
+    <div class="cell">Date</div>
+    <div class="cell">Grade</div>
+  </div>
+  <div class="row">
+    <div class="cell">
+      <div class="img-wrapper">
+        {% if student.photo %}
+          <img id="student-photo" src="{{ student.photo.url }}" alt="{{ student.name }}" />
+        {% else %}
+          <img id="student-photo" src="{{ student.get_photo.url }}" alt="default-picture" />
+        {% endif %}
+      </div>
+    </div>
+    <div class="cell">{{ student.name }}</div>
+    <div class="cell">{{ teacher.school_subject }}</div>
+    <div class="cell">{{ current_date }}</div>
+
+    <div class="cell">
+      <input
+        type="number"
+        step="0.1"
+        max="10"
+        min="0"
+        name="student-grade"
+        id="student-grade"
+        required
+      />
+    </div>
+  </div>
+  <div class="button-wrapper">
+    <button class="save-btn" type="submit">Save</button>
+    <button class="cancel-btn" type="button" id="display-manager">Cancel</button>
+  </div>
+</form>
+
+<script>
+    let table = document.getElementById("form-table");
+    const btnManager = document.getElementById("display-manager");
+    let inputValue = document.getElementById('student-grade').value
+    if (inputValue === 0){
+      inputValue = 0
+    }
+    btnManager.addEventListener("click", () => {
+      setTimeout(() => {
+        table.style.display = table.style.display === "none" ? "flex" : "none";
+      }, 500);
+    });
+</script>
+{% endblock %}

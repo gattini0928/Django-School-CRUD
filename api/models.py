@@ -95,7 +95,7 @@ class Exam(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.subject} - {self.student.name}: {self.grade}"
+        return f" {self.student.name}: {self.subject} - {self.grade} | Teacher: {self.teacher.name} "
 
     def save(self, *args, **kwargs):
         """Ensure that teacher's subject matches the exam subject before saving."""

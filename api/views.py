@@ -10,10 +10,59 @@ from django.views.generic import FormView, DetailView, ListView, CreateView, Upd
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import datetime
 
 
 def index(request):
-    return render(request, 'index.html')
+    tempUser= User.objects.create_user(username="anon", email="none", first_name="none", last_name="none")
+    tempUser.save()
+    students = Student.objects.all()
+    if request.user.is_anonymous:
+        anonUser = User.objects.get(username='anon')
+        request.user=User.objects.get(id=anonUser.id)
+    try:
+        teacher = Teacher.objects.get(user=request.user)
+    except Teacher.DoesNotExist:
+        teacher = None
+
+    if request.method == 'POST':
+        student_id = request.POST.get('student_id')
+        if teacher:
+            return redirect('exam_manager', student_id=student_id, teacher_id=teacher.id)
+
+    return render(request, 'index.html', {'students': students})
+
+
+@login_required
+def exam_manager(request, student_id, teacher_id):
+
+    if not request.user.is_authenticated:
+        messages.error(request, f'You need to be log in to access this page')
+        return redirect('login')
+    try:
+        teacher = get_object_or_404(Teacher, id=teacher_id)
+        student = get_object_or_404(Student, id=student_id)
+        exam = None
+        current_date = datetime.now().date
+    except Teacher.DoesNotExist:
+        messages.error(request, f'Teacher not found')
+    except Student.DoesNotExist:
+        messages.error(request, 'Student not found')
+        return redirect('index')
+
+    if request.method == 'POST':
+        grade = request.POST.get('student-grade')
+        if grade:
+            exam = Exam.objects.create(teacher=teacher,
+                                       student=student,
+                                       subject=teacher.school_subject,
+                                       grade=float(grade))
+            messages.success(request, 'Exam create successfully')
+            return redirect('index')
+        else:
+            messages.error(
+                request, 'You need to provided a grade to the exam.')
+    return render(request, "exam_manager.html", {"teacher": teacher, "student": student, 'exam': exam, "current_date": current_date})
 
 
 class TeacherLoginView(FormView):
@@ -120,8 +169,6 @@ class TeacherUpdateView(LoginRequiredMixin, UpdateView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-
-
 @login_required
 def delete_teacher(request, id):
     user = request.user
@@ -184,7 +231,6 @@ class StudentGradeView(LoginRequiredMixin, DetailView):
         student_id = self.kwargs['id']
         student = get_object_or_404(Student, id=student_id)
         return student
-
 
 
 @login_required

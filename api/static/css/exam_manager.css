@@ -1,0 +1,118 @@
+#form-table {
+  display: none;
+  flex-direction: column;
+  width: 80%;
+  margin-top: 10rem;
+  border-radius: 0.5rem;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.cell {
+  flex: 1;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#student-select {
+  border: solid 1px white;
+  outline: none;
+  background-color: transparent !important;
+  color: rgb(99, 99, 99);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  text-align: center;
+  padding: 0.5rem;
+  appearance: none;
+}
+
+.img-wrapper {
+  width: 5rem;
+  height: 5rem;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+}
+
+#student-photo {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  width: 80%;
+}
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 2rem;
+}
+
+.save-btn,.cancel-btn {
+  margin-top: 2rem auto 0;
+  width: 10rem;
+  text-align: center;
+  padding: 1rem;
+  display: block;
+}
+
+.cancel-btn {
+background-color: rgb(204, 33, 33) !important;
+}
+
+.cancel-btn:hover {
+  background-color: rgb(174, 21, 21) !important;
+  }
+
+.save-btn{
+  background-color: rgb(83, 196, 83);
+}
+.save-btn:hover{
+  background-color: rgb(47, 158, 47);
+} 
+
+#display-manager{
+  background-color: rgb(86, 55, 152);
+}
+
+#display-manager,
+.save-btn {
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: whitesmoke;
+  padding: 1rem;
+}
+
+#display-manager:hover {
+  background-color: rgb(72, 37, 146);
+}
+
+#student-grade {
+  border: solid 1px white;
+  outline: none;
+  background-color: transparent;
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  text-align: center;
+  padding: 0.5rem;
+  appearance: none;
+}

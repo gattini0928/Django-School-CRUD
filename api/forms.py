@@ -40,4 +40,6 @@ class StudentForm(forms.ModelForm):
 class ExamForm(forms.ModelForm):
     class Meta:
         model = Exam
-        fields = ['student', 'teacher', 'subject', 'grade']
+        fields = ['student', 'grade']
+        widgets = {forms.SelectMultiple(attrs={'id': 'student-select'}),
+                   forms.NumberInput(attrs={'id': 'student-grade'})}

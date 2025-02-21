@@ -1,9 +1,9 @@
 from django.urls import path
 from .views import *
-from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', index, name='index'),
+    path('exam-manager/<int:student_id>/<int:teacher_id>/', exam_manager, name='exam_manager'),
     path('create-account/', TeacherCreateAccountView.as_view(),
          name='create_account'),
     path('login/', TeacherLoginView.as_view(), name='login'),
