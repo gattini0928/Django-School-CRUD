@@ -234,6 +234,11 @@ class StudentGradeView(LoginRequiredMixin, DetailView):
         student = get_object_or_404(Student, id=student_id)
         return student
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['subjects'] = self.object.get_grades_by_subject()
+        return context
+
 
 @login_required
 def user_logout(request):

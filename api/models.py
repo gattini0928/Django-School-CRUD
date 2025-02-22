@@ -1,7 +1,9 @@
+from collections import defaultdict
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import Sum
+from django.db.models import Sum, Avg
 from django.core.exceptions import ValidationError
+
 
 SCHOOL_SUBJECTS_CHOICES = [
     ("Mathematics", "Mathematics"),
@@ -51,15 +53,39 @@ class Student(models.Model):
         Teacher, related_name='students')
     student_status = models.BooleanField(default=False)
 
+    def get_grades_by_subject(self):
+        """Returns a dictionary grouping exams by subject with average and total score."""
+        subject_data = {}
+
+        exams = self.exams.values('subject').annotate(
+            avg_grade=Avg('grade'),
+            total_score=Sum('grade')
+        )
+
+        for exam in exams:
+            subject = exam['subject']
+            # Limita o total a 100 pontos
+            total_score = min(exam['total_score'], 100)
+            subject_data[subject] = {
+                'average': round(exam['avg_grade'], 2),  # Arredonda a média
+                'total_score': round(total_score, 2),
+                'status': total_score >= 70  # Aprovado se >= 70
+            }
+
+        return subject_data
+
     def total_score(self):
         """Calculates the sum of all grades and ensures that it does not exceed 100."""
         total = sum(exam.grade for exam in self.exam.all())
         return min(total, 100)
 
     def average(self):
-        """Calculates the sum of all grades and ensures that it does not exceed 100."""
-        total = sum(exam.grade for exam in self.exam.all())
-        return total / len(self.exam.all)
+        """Calculates the average of all grades"""
+        exams = self.exams.all()
+        if not exams:
+            return 0
+        total = sum(exam.grade for exam in exams)
+        return total / len(exams)
 
     def total_score_by_subject(self):
         """Returns a dictionary with the sum of grades per subject."""
@@ -100,7 +126,7 @@ class Exam(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f" {self.student.name}: {self.subject} - {self.grade} | Teacher: {self.teacher.name} "
+        return f" {self.student.name}: {self.subject} - {self.grade} | Teacher: {self.teacher.name} | Date: {self.date} "
 
     def save(self, *args, **kwargs):
         """Ensure that teacher's subject matches the exam subject before saving."""

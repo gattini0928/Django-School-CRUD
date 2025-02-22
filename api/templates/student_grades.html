@@ -9,7 +9,6 @@
 {% block content %}
     <section class="container-page">
         <h1>Subjects Grades | {{student.name}}</h1>
-
         <div class="profile-card">
             <div class="image-card">
                 {% if student.photo %}
@@ -31,24 +30,21 @@
                 <div class="table-cell">Total Score</div>
                 <div class="table-cell">Status</div>
             </div>
+            {% for subject, data in subjects.items %}
             <div class="table-row">
-                <div class="table-cell">Chemistry</div>
-                <div class="table-cell">9.2</div>
-                <div class="table-cell">92.6</div>
-                <div class="table-cell status approved">Approved</div>
+                    <div class="table-cell">{{subject}}</div>
+                    <div class="table-cell">{{data.average}}</div>
+                    <div class="table-cell">{{data.total_score}}</div>
+                    <div class="table-cell status">
+                    {% if data.status %}
+                        <p class="approved">Approved</p>
+                    {% else %}
+                        <p class="failed">Reproved</p>
+                    {% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="table-row">
-                <div class="table-cell">English</div>
-                <div class="table-cell">4.6</div>
-                <div class="table-cell">69.9</div>
-                <div class="table-cell status reproved">Reproved</div>
-            </div>
-            <div class="table-row">
-                <div class="table-cell">Mathematics</div>
-                <div class="table-cell">8.8</div>
-                <div class="table-cell">80.0</div>
-                <div class="table-cell status approved">Approved</div>
-            </div>
+            {% endfor %}
         </div>
     </section>
 {% endblock %}

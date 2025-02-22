@@ -79,11 +79,15 @@ h1 {
 .approved {
     background-color: #4CAF50;
     color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
 }
 
-.reproved {
+.failed {
     background-color: #F44336;
     color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
 }
 
 @media (max-width: 768px) {
