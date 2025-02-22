@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Students
+{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/cards.css' %}">
+    <link rel="stylesheet" href="{% static 'css/teachers.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container-cards">
+{% for teacher in teachers %}
+<div class="container-card">
+<div class="card">
+    <h3>{{ teacher.name }}</h3>
+    {% if teacher.photo %}
+        <img src="{{ teacher.photo.url }}" alt="{{ teacher.name }}" class="student-photo">
+    {% else %}
+    <img src="{{ teacher.get_photo_url }}" alt="teacher perfil picture">
+    {% endif %}
+    <p>{{teacher.email}}</p>
+    <p>{{teacher.school_subject}}</p>
+</div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

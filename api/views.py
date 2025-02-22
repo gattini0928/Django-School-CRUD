@@ -224,6 +224,12 @@ class StudentsPerfilView(LoginRequiredMixin, ListView):
     context_object_name = "students"
 
 
+class TeacherPerfilViewList(LoginRequiredMixin, ListView):
+    model = Teacher
+    template_name = 'teachers.html'
+    context_object_name = "teachers"
+
+
 class StudentGradeView(LoginRequiredMixin, DetailView):
     model = Student
     template_name = 'student_grades.html'

@@ -3,7 +3,8 @@ from .views import *
 
 urlpatterns = [
     path('', index, name='index'),
-    path('exam-manager/<int:student_id>/<int:teacher_id>/', exam_manager, name='exam_manager'),
+    path('exam-manager/<int:student_id>/<int:teacher_id>/',
+         exam_manager, name='exam_manager'),
     path('create-account/', TeacherCreateAccountView.as_view(),
          name='create_account'),
     path('login/', TeacherLoginView.as_view(), name='login'),
@@ -11,6 +12,8 @@ urlpatterns = [
          name='teacher_perfil'),
     path('teacher-edit-perfil/', TeacherUpdateView.as_view(),
          name='teacher_edit_perfil'),
+    path('teachers/', TeacherPerfilViewList.as_view(),
+         name='teachers'),
     path('delete-teacher/<int:id>/',
          delete_teacher, name='delete_teacher'),
 
