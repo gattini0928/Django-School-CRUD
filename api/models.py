@@ -66,25 +66,12 @@ class Student(models.Model):
             subject = exam['subject']
             total_score = min(exam['total_score'], 100)
             subject_data[subject] = {
-                'average': round(exam['avg_grade'], 2), 
+                'average': round(exam['avg_grade'], 2),
                 'total_score': round(total_score, 2),
                 'status': total_score >= 70
             }
 
         return subject_data
-
-    def total_score(self):
-        """Calculates the sum of all grades and ensures that it does not exceed 100."""
-        total = sum(exam.grade for exam in self.exam.all())
-        return min(total, 100)
-
-    def average(self):
-        """Calculates the average of all grades"""
-        exams = self.exams.all()
-        if not exams:
-            return 0
-        total = sum(exam.grade for exam in exams)
-        return total / len(exams)
 
     @property
     def status(self):
