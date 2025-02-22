@@ -64,12 +64,11 @@ class Student(models.Model):
 
         for exam in exams:
             subject = exam['subject']
-            # Limita o total a 100 pontos
             total_score = min(exam['total_score'], 100)
             subject_data[subject] = {
-                'average': round(exam['avg_grade'], 2),  # Arredonda a média
+                'average': round(exam['avg_grade'], 2), 
                 'total_score': round(total_score, 2),
-                'status': total_score >= 70  # Aprovado se >= 70
+                'status': total_score >= 70
             }
 
         return subject_data
@@ -86,17 +85,6 @@ class Student(models.Model):
             return 0
         total = sum(exam.grade for exam in exams)
         return total / len(exams)
-
-    def total_score_by_subject(self):
-        """Returns a dictionary with the sum of grades per subject."""
-        subject_scores = {subject[0]: 0 for subject in SCHOOL_SUBJECTS_CHOICES}
-
-        exams = self.exams.values('subject').annotate(total=Sum('grade'))
-
-        for exam in exams:
-            subject_scores[exam['subject']] = min(exam['total'], 100)
-
-        return subject_scores
 
     @property
     def status(self):
