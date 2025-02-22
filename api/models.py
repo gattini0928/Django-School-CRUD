@@ -56,6 +56,11 @@ class Student(models.Model):
         total = sum(exam.grade for exam in self.exam.all())
         return min(total, 100)
 
+    def average(self):
+        """Calculates the sum of all grades and ensures that it does not exceed 100."""
+        total = sum(exam.grade for exam in self.exam.all())
+        return total / len(self.exam.all)
+
     def total_score_by_subject(self):
         """Returns a dictionary with the sum of grades per subject."""
         subject_scores = {subject[0]: 0 for subject in SCHOOL_SUBJECTS_CHOICES}

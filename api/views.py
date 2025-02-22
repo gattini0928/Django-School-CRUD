@@ -14,12 +14,14 @@ from datetime import datetime
 
 
 def index(request):
-    tempUser= User.objects.create_user(username="anon", email="none", first_name="none", last_name="none")
-    tempUser.save()
+    tempUser, _ = User.objects.get_or_create(username="anon", defaults={
+                                             "email": "none", "first_name": "none", "last_name": "none"})
     students = Student.objects.all()
     if request.user.is_anonymous:
-        anonUser = User.objects.get(username='anon')
-        request.user=User.objects.get(id=anonUser.id)
+        request.user = tempUser
+        messages.error(
+            request, 'Anonymous User cannot have permission to operate the system')
+        return redirect('login')
     try:
         teacher = Teacher.objects.get(user=request.user)
     except Teacher.DoesNotExist:
