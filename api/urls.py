@@ -14,6 +14,8 @@ urlpatterns = [
          name='teacher_edit_perfil'),
     path('teachers/', TeacherPerfilViewList.as_view(),
          name='teachers'),
+    path('teacher-exam/', TeacherExamView.as_view(),
+         name='teacher_exams'),
     path('delete-teacher/<int:id>/',
          delete_teacher, name='delete_teacher'),
 

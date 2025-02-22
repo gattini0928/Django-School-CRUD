@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.db.models import Sum, Avg
 from django.core.exceptions import ValidationError
 
-
 SCHOOL_SUBJECTS_CHOICES = [
     ("Mathematics", "Mathematics"),
     ("English", "English"),
@@ -18,9 +17,7 @@ SCHOOL_SUBJECTS_CHOICES = [
     ("Philosophy", "Philosophy"),
     ("Computer Science", "Computer Science"),
     ("Geography", "Geography"),
-
 ]
-
 
 class Teacher(models.Model):
     user = models.OneToOneField(
@@ -39,7 +36,6 @@ class Teacher(models.Model):
         if self.photo:
             return self.photo.url
         return '/media/teachers/default.jpg'
-
 
 class Student(models.Model):
     user = models.OneToOneField(
@@ -90,12 +86,11 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
-
-
+    
 class Exam(models.Model):
     student = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name="exams")
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='exams')
     subject = models.CharField(max_length=50, choices=SCHOOL_SUBJECTS_CHOICES)
     grade = models.DecimalField(max_digits=4, decimal_places=2)
     date = models.DateField(auto_now_add=True)

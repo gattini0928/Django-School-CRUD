@@ -171,6 +171,24 @@ class TeacherUpdateView(LoginRequiredMixin, UpdateView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
+class TeacherPerfilViewList(LoginRequiredMixin, ListView):
+    model = Teacher
+    template_name = 'teachers.html'
+    context_object_name = "teachers"
+
+
+class TeacherExamView(LoginRequiredMixin, ListView):
+    model = Exam
+    template_name = 'teacher_exams.html'
+    context_object_name = 'exams'
+
+    def get_queryset(self):
+        user = self.request.user
+        if hasattr(user, 'teacher'):
+            return Exam.objects.filter(teacher=user.teacher)
+        return Exam.objects.none()
+
+
 @login_required
 def delete_teacher(request, id):
     user = request.user
@@ -222,12 +240,6 @@ class StudentsPerfilView(LoginRequiredMixin, ListView):
     model = Student
     template_name = 'students_perfil.html'
     context_object_name = "students"
-
-
-class TeacherPerfilViewList(LoginRequiredMixin, ListView):
-    model = Teacher
-    template_name = 'teachers.html'
-    context_object_name = "teachers"
 
 
 class StudentGradeView(LoginRequiredMixin, DetailView):

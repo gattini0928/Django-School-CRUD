@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/exams.css' %}" />   
+    <link rel="stylesheet" href="{% static 'css/teacher_exams.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <h1>Your Exams</h1>
+        <div class="table">
+            <div class="row header">
+                <div class="cell">Student</div>
+                <div class="cell">Subject</div>
+                <div class="cell">Grade</div>
+                <div class="cell">Date</div>
+            </div>
+            {% for exam in exams %}
+                <div class="row">
+                    <div class="cell">{{ exam.student.name }}</div>
+                    <div class="cell">{{ exam.subject }}</div>
+                    <div class="cell">{{ exam.grade }}</div>
+                    <div class="cell">{{ exam.date }}</div>
+                </div>
+            {% empty %}
+                <p>No exams found.</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

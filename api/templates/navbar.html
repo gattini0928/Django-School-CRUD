@@ -2,9 +2,10 @@
         <a href="{% url 'index' %}" id="brand"><i class="fa-solid fa-school"></i>Gonçalves Dias</a>
         <div class="container-nav-links light-bg dark-bg" id="container-navbar-links">
             {% if request.user.is_authenticated %}
+            <a class="perfil" href="{% url 'teacher_perfil' %}"><i class="fa-solid fa-user"></i></a>
             <a id="nav-link" href="{% url 'teachers' %}">Teachers</a>
             <a id="nav-link" href="{% url 'students_perfil' %}">Students</a>
-            <a class="perfil" href="{% url 'teacher_perfil' %}"><i class="fa-solid fa-user"></i></a>
+            <a id="nav-link" href="{% url 'teacher_exams' %}">Your Exams</a>
             <a id='nav-link' href="{% url 'create_student' %}">Create Student</a>
             <a id="nav-link" href="{% url 'logout' %}">Logout</a>
             {% else %}

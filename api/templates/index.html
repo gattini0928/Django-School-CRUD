@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
   <div class="wrapper">
-    <h1>Server Running</h1>
+    <h1>Manage your Students right here.</h1>
     {% if students %}
       <form class="form" action="{% url 'index' %}" method="POST">
         {% csrf_token %}
