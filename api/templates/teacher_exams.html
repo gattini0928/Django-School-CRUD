@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="cell">{{ exam.student.name }}</div>
                     <div class="cell">{{ exam.subject }}</div>
-                    <div class="cell">{{ exam.grade }}</div>
+                    <div class="cell grade" >{{ exam.grade }}</div>
                     <div class="cell">{{ exam.date }}</div>
                 </div>
             {% empty %}
@@ -28,5 +28,18 @@
             {% endfor %}
         </div>
     </div>
+    <script>
+        const grades = document.querySelectorAll('.grade');
+
+        grades.forEach(grade => {
+            const gradeValue = parseInt(grade.textContent);
+
+            if (gradeValue >= 7) {
+                grade.style.backgroundColor = 'rgb(74, 146, 136)'; 
+            } else {
+                grade.style.backgroundColor = 'rgb(189, 75, 80)';
+            }
+        });       
+    </script>
 {% endblock %}
 
