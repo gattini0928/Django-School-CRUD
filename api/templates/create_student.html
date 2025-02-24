@@ -30,13 +30,15 @@
                     {{ form.password }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="input-wrapper">
-                    <label for="{{ form.photo.id_for_label }}" class="custom-file-label btn">Escolher Foto</label>
-                    <input type="file" name="photo" id="{{ form.photo.id_for_label }}" class="custom-file-input">
+            <div class="buttons-wrapper">
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <label for="{{ form.photo.id_for_label }}" class="custom-file-label btn">Escolher Foto</label>
+                        <input type="file" name="photo" id="{{ form.photo.id_for_label }}" class="custom-file-input">
+                    </div>
                 </div>
+                <button type="submit" class="btn create">Create Student</button>
             </div>
-            <button type="submit" class="btn">Create Student</button>
         </form>
     </div>
 {% endblock %}

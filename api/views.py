@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .models import Teacher, Student, Exam
-from .forms import TeacherForm, TeacherLoginForm, StudentForm
+from .forms import TeacherForm, TeacherLoginForm, StudentForm, TeacherUpdateForm
 from django.views.generic import FormView, DetailView, ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -141,7 +141,7 @@ class TeacherPerfilView(LoginRequiredMixin, DetailView):
 
 class TeacherUpdateView(LoginRequiredMixin, UpdateView):
     model = Teacher
-    form_class = TeacherForm
+    form_class = TeacherUpdateForm
     template_name = 'perfil_edit.html'
     success_url = reverse_lazy('teacher_perfil')
 
@@ -151,11 +151,13 @@ class TeacherUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         teacher = form.save(commit=False)
         user = teacher.user
-        user.username = form.cleaned_data['email']
-        user.email = form.cleaned_data['email']
+        user.username = form.cleaned_data.get('email','')
+        user.email = form.cleaned_data.get('email', '')
 
-        if form.cleaned_data['password']:
-            user.set_password(form.cleaned_data['password'])
+        new_password = form.cleaned_data.get('password', '')
+        if new_password:
+            user.set_password(new_password)
+
         if self.request.FILES.get('photo'):
             teacher.photo = self.request.FILES['photo']
 

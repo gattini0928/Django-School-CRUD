@@ -2,8 +2,6 @@ from django.test import TestCase
 from api.models import Student, Exam, Teacher
 from django.contrib.auth import get_user_model
 from datetime import date
-from django.db.models import Avg, Sum
-
 
 class TeacherModelTest(TestCase):
     def setUp(self):

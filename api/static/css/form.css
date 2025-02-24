@@ -22,14 +22,14 @@
     width: 80%;
 }
 .btn {
-color: white;
-  padding: 1rem 2rem;
-  margin: 0.5rem;
+  font-size: 2rem;
+  color: white;
+  padding: 1rem;
+  margin-top: 0.5rem;
   border: none;
   cursor: pointer;
   border-radius: 0.5rem;
   text-decoration: none;
-  display: inline-block; 
 }
 .btn{
   background-color: #2560de;
@@ -37,6 +37,14 @@ color: white;
   .btn:hover {
     background-color: #154fcb;
   }
+
+.create{
+  background-color: rgb(60, 189, 60);
+  border: solid 0.5px black;
+  }
+.create:hover {
+  background-color: rgb(47, 158, 47);
+}
 
 .form-group {
     margin-bottom: 1.5rem;
@@ -81,4 +89,12 @@ input[type="file"].custom-file-input {
 
 .custom-file-input + .form-label:active {
   background-color: #1a75f2;
+}
+
+.buttons-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-direction: column;
 }
