@@ -30,7 +30,6 @@ Agradeço a todos que me ajudaram ao longo dessa jornada de aprendizado. Este pr
 
 ### English Version:
 
-```markdown
 # School Manager - School Management System
 
 This is the first project in my portfolio, developed with Django. The goal is to create a school management system, allowing teachers to manage exams and students in a simple and efficient way.
