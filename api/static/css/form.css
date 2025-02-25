@@ -98,3 +98,16 @@ input[type="file"].custom-file-input {
   gap: 2rem;
   flex-direction: column;
 }
+
+.have-account, .not-have-account {
+  text-decoration: none;
+  color: rgb(35, 199, 70);
+}
+
+.have-account, .not-have-account, strong {
+  font-size: 1.8rem;
+}
+
+.have-account:hover, .not-have-account:hover {
+  color: rgb(10, 146, 39);
+}

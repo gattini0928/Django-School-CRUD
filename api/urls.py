@@ -28,5 +28,4 @@ urlpatterns = [
     path('delete-student/<int:id>/',
          delete_student, name='delete_student'),
     path('logout/', user_logout, name='logout'),
-
 ]
