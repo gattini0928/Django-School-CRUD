@@ -36,19 +36,19 @@ body {
 
 .success {
   font-size: 2rem;
-  color: rgb(5, 119, 56);
+  color: rgb(11, 133, 66);
   font-weight: 600;
 }
 
 .error {
   font-size: 2rem;
-  color: rgb(162, 6, 17);
+  color: rgb(175, 12, 23);
   font-weight: 600;
 }
 
 .info {
   font-size: 2rem;
-  color: rgb(6, 92, 162);
+  color: rgb(15, 107, 182);
   font-weight: 600;
 }
 

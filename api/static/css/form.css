@@ -99,6 +99,13 @@ input[type="file"].custom-file-input {
   flex-direction: column;
 }
 
+.buttons-wrapper-perfil {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
 .have-account, .not-have-account {
   text-decoration: none;
   color: rgb(35, 199, 70);
